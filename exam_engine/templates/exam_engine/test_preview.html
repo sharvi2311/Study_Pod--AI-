@@ -67,6 +67,9 @@
 
 <body class="teacher-parent-portal">
 {% include "accounts/partials/student_portal_header.html" %}
+{% if user.is_authenticated and request.resolver_match.url_name != 'dashboard' and request.resolver_match.url_name != 'student_test' %}
+{% include "accounts/partials/portal_breadcrumb.html" %}
+{% endif %}
 
 <div class="container preview-container">
 

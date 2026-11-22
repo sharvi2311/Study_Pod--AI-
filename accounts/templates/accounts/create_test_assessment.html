@@ -12,6 +12,9 @@
 <div class="portal-shell">
 {% include "accounts/partials/portal_sidebar.html" %}
 <main id="portal-main" class="portal-main">
+{% if user.is_authenticated and request.resolver_match.url_name != 'dashboard' and request.resolver_match.url_name != 'student_test' %}
+{% include "accounts/partials/portal_breadcrumb.html" %}
+{% endif %}
 <div class="container py-5" style="max-width: 760px">
     <h1 class="fw-bold">Set up a test</h1>
     <p class="text-muted mb-4">Add the test details, then you’ll go to the question editor.</p>

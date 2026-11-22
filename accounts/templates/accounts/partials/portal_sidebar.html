@@ -6,10 +6,11 @@
 
     <nav class="sidebar-nav" aria-label="Sections">
         {% if user.role == "TEACHER" %}
-            <p class="sidebar-group-label">Teaching</p>
+            <p class="sidebar-group-label">Overview</p>
             <a class="sidebar-link" data-sidebar-routes="dashboard" href="{% url 'dashboard' %}">
                 <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m3 10 9-7 9 7v10a1 1 0 0 1-1 1h-6v-7h-4v7H4a1 1 0 0 1-1-1z"/></svg><span>Dashboard</span>
             </a>
+            <p class="sidebar-group-label">Academics</p>
             <a class="sidebar-link" data-sidebar-routes="test_management question_create test_preview teacher_attempts teacher_attempt_detail" href="{% url 'test_management' %}">
                 <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 3h10l3 3v15H4V3zM8 3v6h8V3M8 14h8M8 18h5"/></svg><span>Assessments &amp; Tests</span>
             </a>
@@ -25,7 +26,7 @@
             <a class="sidebar-link" data-sidebar-routes="resource_upload teacher_resource_detail teacher_resource_reindex teacher_resource_delete" href="{% url 'resource_upload' %}">
                 <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 4h6l2 2h8a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2Z"/><path d="M12 10v7M9 14l3-4 3 4"/></svg><span>Study Resources</span>
             </a>
-            <p class="sidebar-group-label">Community</p>
+            <p class="sidebar-group-label">Community &amp; Leave</p>
             <a class="sidebar-link" data-sidebar-routes="notices create_notice" href="{% url 'notices' %}">
                 <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M18 8a6 6 0 0 0-12 0c0 7-3 7-3 9h18c0-2-3-2-3-9M10 21h4"/></svg><span>Notices</span>
             </a>
@@ -39,10 +40,11 @@
                 <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg><span>Request Leave</span>
             </a>
         {% elif user.role == "STUDENT" %}
-            <p class="sidebar-group-label">Learning</p>
+            <p class="sidebar-group-label">Overview</p>
             <a class="sidebar-link" data-sidebar-routes="dashboard" href="{% url 'dashboard' %}">
                 <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m3 10 9-7 9 7v10a1 1 0 0 1-1 1h-6v-7h-4v7H4a1 1 0 0 1-1-1z"/></svg><span>Dashboard</span>
             </a>
+            <p class="sidebar-group-label">Academics</p>
             <a class="sidebar-link" data-sidebar-routes="student_assessments student_assessment_instructions student_result" href="{% url 'student_assessments' %}">
                 <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 3h10l3 3v15H4V3zM8 3v6h8V3M8 14h8M8 18h5"/></svg><span>My Assessments</span>
             </a>
@@ -58,7 +60,7 @@
             <a class="sidebar-link" data-sidebar-routes="resource_list student_resource_detail" href="{% url 'resource_list' %}">
                 <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 4h6l2 2h8a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2Z"/><path d="M12 10v7M9 14l3-4 3 4"/></svg><span>Study Resources</span>
             </a>
-            <p class="sidebar-group-label">Community</p>
+            <p class="sidebar-group-label">Community &amp; Leave</p>
             <a class="sidebar-link" data-sidebar-routes="notices" href="{% url 'notices' %}">
                 <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M18 8a6 6 0 0 0-12 0c0 7-3 7-3 9h18c0-2-3-2-3-9M10 21h4"/></svg><span>Notices</span>
             </a>
@@ -69,10 +71,11 @@
                 <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="4" y="3" width="16" height="18" rx="2"/><path d="M8 8h8M8 12h8M8 16h5"/></svg><span>Leave Applications</span>
             </a>
         {% elif user.role == "PARENT" %}
-            <p class="sidebar-group-label">Family</p>
+            <p class="sidebar-group-label">Overview</p>
             <a class="sidebar-link" data-sidebar-routes="dashboard" href="{% url 'dashboard' %}">
                 <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m3 10 9-7 9 7v10a1 1 0 0 1-1 1h-6v-7h-4v7H4a1 1 0 0 1-1-1z"/></svg><span>Child Overview</span>
             </a>
+            <p class="sidebar-group-label">Academics</p>
             <a class="sidebar-link" data-sidebar-routes="parent_analytics" href="{% url 'parent_analytics' %}">
                 <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 20V12M10 20V5M16 20v-8M22 20H2"/></svg><span>Progress &amp; Marks</span>
             </a>
@@ -85,7 +88,7 @@
             <a class="sidebar-link" data-sidebar-routes="resource_list student_resource_detail" href="{% url 'resource_list' %}">
                 <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 4h6l2 2h8a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2Z"/><path d="M12 10v7M9 14l3-4 3 4"/></svg><span>Study Resources</span>
             </a>
-            <p class="sidebar-group-label">Community</p>
+            <p class="sidebar-group-label">Community &amp; Leave</p>
             <a class="sidebar-link" data-sidebar-routes="notices" href="{% url 'notices' %}">
                 <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M18 8a6 6 0 0 0-12 0c0 7-3 7-3 9h18c0-2-3-2-3-9M10 21h4"/></svg><span>Notices</span>
             </a>
@@ -96,7 +99,7 @@
                 <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="4" y="3" width="16" height="18" rx="2"/><path d="M8 8h8M8 12h8M8 16h5"/></svg><span>Shared Leave</span>
             </a>
         {% else %}
-            <p class="sidebar-group-label">Workspace</p>
+            <p class="sidebar-group-label">Overview</p>
             <a class="sidebar-link" data-sidebar-routes="dashboard" href="{% url 'dashboard' %}">
                 <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m3 10 9-7 9 7v10a1 1 0 0 1-1 1h-6v-7h-4v7H4a1 1 0 0 1-1-1z"/></svg><span>Dashboard</span>
             </a>
@@ -106,6 +109,7 @@
         {% endif %}
 
         <div class="sidebar-footer-links">
+            <p class="sidebar-group-label">Account</p>
             <a class="sidebar-link" data-sidebar-routes="profile" href="{% url 'profile' %}">
                 <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="8" r="4"/><path d="M4 21a8 8 0 0 1 16 0"/></svg><span>Profile</span>
             </a>
@@ -129,7 +133,7 @@
         sidebar.querySelectorAll('[data-sidebar-routes]').forEach(function (link) {
             var routes = link.getAttribute('data-sidebar-routes').split(/\s+/);
             if (routes.indexOf(currentRoute) !== -1) {
-                link.classList.add('is-active');
+                link.classList.add('active');
                 link.setAttribute('aria-current', 'page');
             }
         });

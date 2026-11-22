@@ -222,6 +222,9 @@
             {% include "accounts/partials/portal_sidebar.html" %}
         {% endif %}
         <main id="portal-main">
+        {% if user.is_authenticated and request.resolver_match.url_name != "dashboard" and request.resolver_match.url_name != "student_test" %}
+            {% include "accounts/partials/portal_breadcrumb.html" %}
+        {% endif %}
     {% else %}
         <main id="portal-main" class="container py-5">
     {% endif %}

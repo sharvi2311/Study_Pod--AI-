@@ -1,0 +1,51 @@
+<div class="portal-breadcrumb-bar">
+    <div class="portal-breadcrumb-leading">
+        <button type="button" class="portal-quick-back" data-portal-back>
+            <span aria-hidden="true">&larr;</span> Back
+        </button>
+        <nav class="portal-breadcrumb-trail" aria-label="Breadcrumb">
+            <a href="{% url 'dashboard' %}">Dashboard</a>
+            <span aria-hidden="true">/</span>
+            <span class="portal-breadcrumb-current" aria-current="page">
+                {% with route=request.resolver_match.url_name %}
+                    {% if route == 'test_management' %}Assessments &amp; Tests
+                    {% elif route == 'question_create' %}Create Questions
+                    {% elif route == 'test_preview' %}Assessment Preview
+                    {% elif route == 'teacher_attempts' %}Test Attempts
+                    {% elif route == 'teacher_attempt_detail' %}Attempt Details
+                    {% elif route == 'student_assessments' %}My Assessments
+                    {% elif route == 'student_assessment_instructions' %}Assessment Instructions
+                    {% elif route == 'student_result' %}Assessment Result
+                    {% elif route == 'doubt_threads' %}Doubt Discussions
+                    {% elif route == 'doubt_thread_detail' %}Doubt Discussion
+                    {% elif route == 'teacher_leave_page' or route == 'student_leave_page' or route == 'parent_leave_page' %}Leave
+                    {% elif route == 'teacher_leave_request' %}Request Leave
+                    {% elif route == 'teacher_timetable' or route == 'student_timetable' or route == 'parent_timetable' %}Timetable
+                    {% elif route == 'teacher_attendance' or route == 'academics_student_attendance' or route == 'student_attendance' or route == 'parent_attendance' %}Attendance
+                    {% elif route == 'teacher_analytics' or route == 'student_analytics' or route == 'parent_analytics' %}Progress &amp; Analytics
+                    {% elif route == 'resource_upload' or route == 'resource_list' %}Study Resources
+                    {% elif route == 'student_resource_detail' or route == 'teacher_resource_detail' %}Resource Details
+                    {% elif route == 'assessment_type_choice' %}Create an Assessment
+                    {% elif route == 'create_assessment' or route == 'create_test_assessment' %}Assessment Setup
+                    {% elif route == 'notices' or route == 'create_notice' %}Notices
+                    {% elif route == 'profile' %}Profile
+                    {% else %}{{ route|title }}{% endif %}
+                {% endwith %}
+            </span>
+        </nav>
+    </div>
+    <a class="portal-dashboard-shortcut" href="{% url 'dashboard' %}">Dashboard</a>
+</div>
+<script>
+    (function () {
+        var backButton = document.querySelector('[data-portal-back]');
+        if (!backButton) return;
+        backButton.addEventListener('click', function () {
+            if (window.history.length > 1 && document.referrer.indexOf(window.location.host) !== -1) {
+                window.history.back();
+            } else {
+                window.location.href = "{% url 'dashboard' %}";
+            }
+        });
+    })();
+</script>
