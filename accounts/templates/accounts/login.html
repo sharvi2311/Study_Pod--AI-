@@ -2,6 +2,24 @@
 
 {% block title %}StudyPod Login{% endblock %}
 
+{% block extra_head %}
+<script>
+    (function () {
+        var theme = null;
+        try {
+            theme = localStorage.getItem('studypod-theme');
+        } catch (error) {
+            // Storage can be unavailable in private browsing contexts.
+        }
+        if (theme !== 'dark' && theme !== 'light') {
+            var prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+            theme = prefersDark ? 'dark' : 'light';
+        }
+        document.documentElement.setAttribute('data-theme', theme);
+    })();
+</script>
+{% endblock %}
+
 {% block content %}
 <style>
     .login-screen {
@@ -85,7 +103,56 @@
     .login-submit:hover { background: #cb1631; transform: translateY(-1px); }
     .login-footer { margin-top: 1.75rem; padding-top: 1.35rem; border-top: 1px solid #e5e7eb; color: #888; text-align: center; font-size: .85rem; }
     @media (max-width: 480px) { .login-card { padding: 2rem 1.5rem 1.6rem; } .login-brand h1 { font-size: 1.35rem; } }
+
+    .login-theme-toggle {
+        position: fixed;
+        top: 18px;
+        right: 18px;
+        z-index: 1050;
+        display: grid;
+        width: 42px;
+        height: 42px;
+        place-items: center;
+        border: 1px solid #e2e8f0;
+        border-radius: 50%;
+        background: rgba(255, 255, 255, .9);
+        color: #475569;
+        box-shadow: 0 4px 14px rgba(15, 23, 42, .1);
+        cursor: pointer;
+        font-size: 1.15rem;
+        transition: background .18s, color .18s, transform .18s;
+    }
+    .login-theme-toggle:hover { transform: translateY(-1px); background: #fff; color: #b80d29; }
+
+    html[data-theme="dark"] .login-screen { background: #0f172a !important; color: #f1f5f9; }
+    html[data-theme="dark"] .login-card {
+        border: 1px solid #334155;
+        border-top: 6px solid #b80d29;
+        background: #1e293b !important;
+        box-shadow: 0 18px 44px rgba(0, 0, 0, .28);
+    }
+    html[data-theme="dark"] .login-brand h1 { color: #f1f5f9 !important; }
+    html[data-theme="dark"] .login-tagline { color: #fda4af; }
+    html[data-theme="dark"] .login-portal { background: rgba(225, 29, 72, .18); color: #fda4af; }
+    html[data-theme="dark"] .login-label { color: #cbd5e1; }
+    html[data-theme="dark"] .login-input {
+        background: #0f172a !important;
+        border-color: #334155;
+        color: #f1f5f9 !important;
+    }
+    html[data-theme="dark"] .login-input::placeholder,
+    html[data-theme="dark"] .login-icon { color: #94a3b8; }
+    html[data-theme="dark"] .login-toggle { color: #cbd5e1; }
+    html[data-theme="dark"] .login-footer { border-color: #334155; color: #94a3b8; }
+    html[data-theme="dark"] .login-alert { border-color: #713344; background: #3b1f2b; color: #fecdd3; }
+    html[data-theme="dark"] .login-theme-toggle { border-color: #475569; background: #1e293b; color: #f1f5f9; }
+    html[data-theme="dark"] .login-theme-toggle:hover { background: #263349; }
+    body:has(.login-screen) .navbar .theme-toggle { display: none; }
 </style>
+
+<button type="button" class="login-theme-toggle" data-theme-toggle aria-label="Switch to dark mode" aria-pressed="false" title="Toggle color theme">
+    <span data-theme-toggle-icon aria-hidden="true">☾</span>
+</button>
 
 <section class="login-screen">
     <div class="login-card">

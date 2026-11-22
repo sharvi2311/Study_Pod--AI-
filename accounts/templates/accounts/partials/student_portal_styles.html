@@ -223,8 +223,8 @@
         --sp-text: #e2e8f0;
         --sp-muted: #a7b3c5;
         --sp-border: #2b3950;
-        --sp-surface: #121d2f;
-        --sp-surface-raised: #18263c;
+        --sp-surface: #1e293b;
+        --sp-surface-raised: #263349;
         --student-primary: #fb8296;
         --student-primary-dark: #e4647a;
         --student-primary-soft: #38202a;
@@ -252,12 +252,12 @@
     html[data-theme="dark"] body.teacher-parent-portal .main-card,
     html[data-theme="dark"] body.teacher-parent-portal .related-question-panel,
     html[data-theme="dark"] body.teacher-parent-portal .option-box {
-        background-color: #121d2f !important;
+        background-color: #1e293b !important;
         border-color: #2b3950 !important;
         color: #e2e8f0 !important;
     }
     html[data-theme="dark"] body.student-portal .student-notice-banner {
-        background: linear-gradient(100deg, #121d2f, #241a29) !important;
+        background: linear-gradient(100deg, #1e293b, #241a29) !important;
         border-color: #49303b !important;
     }
     html[data-theme="dark"] body.student-portal .student-notice-banner strong,
@@ -277,17 +277,17 @@
         color: #a7b3c5 !important;
     }
     html[data-theme="dark"] body.teacher-parent-portal .student-nav-button {
-        background: #18263c;
+        background: #263349;
         border-color: #43536b;
     }
     html[data-theme="dark"] body.teacher-parent-portal .related-question-option {
-        background: #121d2f;
+        background: #1e293b;
         border-color: #2b3950;
         color: #e2e8f0;
     }
     html[data-theme="dark"] body.teacher-parent-portal .related-question-option:hover,
     html[data-theme="dark"] body.teacher-parent-portal .related-question-option:focus {
-        background: #1d2b43;
+        background: #263349;
     }
     html[data-theme="dark"] body.teacher-parent-portal .correct-option { background-color: #153228 !important; }
     html[data-theme="dark"] body .theme-toggle { color: #e2e8f0; border-color: #64748b; }
@@ -308,11 +308,36 @@
     }
     html[data-theme="dark"] body .bg-light,
     html[data-theme="dark"] body .bg-white {
-        background-color: #18263c !important;
+        background-color: #263349 !important;
         color: #e2e8f0 !important;
     }
     html[data-theme="dark"] body .text-dark,
     html[data-theme="dark"] body .text-body { color: #e2e8f0 !important; }
+    html[data-theme="dark"] body .table-light,
+    html[data-theme="dark"] body .table-light > th,
+    html[data-theme="dark"] body .table-light > td {
+        --bs-table-color: #cbd5e1;
+        --bs-table-bg: #263349;
+        --bs-table-border-color: #334155;
+    }
+    html[data-theme="dark"] body .badge.bg-light,
+    html[data-theme="dark"] body .badge.text-bg-light { background-color: #263349 !important; color: #cbd5e1 !important; }
+    html[data-theme="dark"] body .badge.bg-warning.text-dark { color: #1e293b !important; }
+    html[data-theme="dark"] body.teacher-parent-portal .timing-option.selected {
+        background-color: #263349 !important;
+        border-color: #fb8296 !important;
+        color: #f1f5f9;
+    }
+    html[data-theme="dark"] body.student-portal .student-profile-page .profile-card,
+    html[data-theme="dark"] body.student-portal .student-profile-page .upload-label {
+        background: #1e293b !important;
+        border-color: #334155 !important;
+        color: #f1f5f9 !important;
+    }
+    html[data-theme="dark"] body.student-portal .student-profile-page .avatar-preview {
+        background: #263349 !important;
+        border-color: #334155 !important;
+    }
 </style>
 <script>
     document.addEventListener('DOMContentLoaded', function () {
@@ -338,6 +363,7 @@
             toggle.addEventListener('click', function () {
                 var theme = root.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
                 root.setAttribute('data-theme', theme);
+                document.dispatchEvent(new CustomEvent('studypod:themechange', { detail: { theme: theme } }));
                 try {
                     localStorage.setItem('studypod-theme', theme);
                 } catch (error) {
