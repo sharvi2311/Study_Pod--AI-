@@ -35,7 +35,9 @@ def _environment_flag(name, default):
 
 # Development defaults are deliberately local. Production deployments must set
 # SECRET_KEY, DEBUG=False, and an explicit comma-separated ALLOWED_HOSTS value.
-DEBUG = _environment_flag("DEBUG", True)
+# Keep local development convenient, but default deployed Vercel functions to
+# production-safe behavior unless DEBUG is explicitly enabled.
+DEBUG = _environment_flag("DEBUG", not _environment_flag("VERCEL", False))
 SECRET_KEY = os.environ.get("SECRET_KEY")
 if not SECRET_KEY:
     if not DEBUG:
