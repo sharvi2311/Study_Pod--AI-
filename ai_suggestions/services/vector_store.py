@@ -3,10 +3,8 @@ import re
 import xml.etree.ElementTree as ElementTree
 import zipfile
 
-import chromadb
 from django.conf import settings
 from pypdf import PdfReader
-from sentence_transformers import SentenceTransformer
 
 
 class StudyPodVectorStore:
@@ -18,6 +16,10 @@ class StudyPodVectorStore:
     CHUNK_OVERLAP = 75
 
     def __init__(self):
+        # Keep optional vector/ML dependencies out of the serverless cold-start
+        # import path. They are needed only when an indexing/search operation is used.
+        import chromadb
+
         db_path = Path(settings.BASE_DIR) / "chroma_db"
         self.client = chromadb.PersistentClient(path=str(db_path))
         self.collection = self.client.get_or_create_collection(
@@ -31,6 +33,8 @@ class StudyPodVectorStore:
         # Load on first use. The model must be downloaded or cached locally
         # before the machine can use it without internet access.
         if self._model is None:
+            from sentence_transformers import SentenceTransformer
+
             self._model = SentenceTransformer(self.MODEL_NAME)
         return self._model
 

@@ -15,9 +15,9 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.contrib import admin
-from django.urls import path, include
+from django.urls import path, include, re_path
 from django.conf import settings
-from django.conf.urls.static import static
+from django.views.static import serve
 from academics import views as academic_views
 
 
@@ -33,13 +33,11 @@ urlpatterns = [
     path("api/student/leave/<int:pk>/cancel/", academic_views.leave_cancel_api, name="leave_cancel_api"),
     path("api/teacher/leave/<int:pk>/review/", academic_views.leave_review_api, name="leave_review_api"),
     path("api/leave/attachments/<int:pk>/", academic_views.leave_attachment_download, name="leave_attachment_download"),
+    re_path(
+        r"^media/(?P<path>.*)$",
+        serve,
+        {"document_root": settings.MEDIA_ROOT},
+    ),
 ]
-
-
-if settings.DEBUG:
-    urlpatterns += static(
-        settings.MEDIA_URL,
-        document_root=settings.MEDIA_ROOT
-    )
 
 
