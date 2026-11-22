@@ -2,6 +2,10 @@ from io import StringIO
 from io import BytesIO
 from datetime import date
 import importlib.util
+import json
+import os
+import subprocess
+import sys
 from tempfile import TemporaryDirectory
 from pathlib import Path
 from unittest import skipUnless
@@ -10,6 +14,7 @@ import zipfile
 from django.core.files.uploadedfile import SimpleUploadedFile
 
 from django.core.management import call_command
+from django.conf import settings as django_settings
 from django.test import TestCase, override_settings
 from django.urls import reverse
 from django.utils import timezone
@@ -19,6 +24,65 @@ from exam_engine.models import AssessmentAttempt, Question, StudentAnswer
 
 from .models import Assessment, Attendance, Class, DoubtAttachment, DoubtReply, DoubtThread, Notice, Resource, Subject, TeachingAssignment, Timetable
 from .utils.dsp_normalizer import normalize_batch, normalize_name, normalize_roll, parse_score
+
+
+class VercelProductionSmokeTests(TestCase):
+    def test_vercel_bundle_includes_database_and_media(self):
+        config_path = django_settings.BASE_DIR / "vercel.json"
+        config = json.loads(config_path.read_text(encoding="utf-8"))
+
+        self.assertEqual(
+            config["builds"][0]["config"]["includeFiles"],
+            ["db.sqlite3", "media/**"],
+        )
+
+    @override_settings(DEBUG=False)
+    def test_production_serves_tracked_media_and_admin_static(self):
+        media_path = "resources/Calculus_Integration_Standard_Formulae.txt"
+        self.assertTrue((django_settings.MEDIA_ROOT / media_path).is_file())
+
+        media_response = self.client.get(f"{django_settings.MEDIA_URL}{media_path}")
+        static_response = self.client.get("/static/admin/css/base.css")
+
+        self.assertEqual(media_response.status_code, 200)
+        self.assertEqual(static_response.status_code, 200)
+        self.assertIn(".vercel.app", django_settings.ALLOWED_HOSTS)
+        self.assertIn("localhost", django_settings.ALLOWED_HOSTS)
+        self.assertIn("127.0.0.1", django_settings.ALLOWED_HOSTS)
+        self.assertIn("https://*.vercel.app", django_settings.CSRF_TRUSTED_ORIGINS)
+
+    def test_environment_host_and_csrf_values_are_appended(self):
+        env = os.environ.copy()
+        env.update({
+            "DEBUG": "False",
+            "SECRET_KEY": "vercel-settings-smoke-test",
+            "ALLOWED_HOSTS": "custom.example, api.custom.example",
+            "CSRF_TRUSTED_ORIGINS": "https://custom.example, https://api.custom.example",
+        })
+        env.pop("VERCEL", None)
+        env.pop("DATABASE_URL", None)
+        code = (
+            "import json; import study_pod.settings as s; "
+            "print(json.dumps({'hosts': s.ALLOWED_HOSTS, 'origins': s.CSRF_TRUSTED_ORIGINS}))"
+        )
+        result = subprocess.run(
+            [sys.executable, "-c", code],
+            cwd=django_settings.BASE_DIR,
+            env=env,
+            check=True,
+            capture_output=True,
+            text=True,
+        )
+        parsed = json.loads(result.stdout)
+
+        self.assertEqual(
+            parsed["hosts"],
+            [".vercel.app", "localhost", "127.0.0.1", "custom.example", "api.custom.example"],
+        )
+        self.assertEqual(
+            parsed["origins"],
+            ["https://*.vercel.app", "https://custom.example", "https://api.custom.example"],
+        )
 
 
 class DSPRosterImportTests(TestCase):
