@@ -1,12 +1,19 @@
 <nav class="navbar navbar-expand-lg student-nav" aria-label="Student portal">
     <div class="container-fluid student-nav-inner">
-        <a class="student-brand" href="{% url 'dashboard' %}" aria-label="StudyPod student dashboard">
-            <span class="student-brand-mark">dsp</span>
-            <span class="student-brand-copy">
-                <strong>StudyPod</strong>
-                <small>DSP ACADEMY · {% if user.role == "TEACHER" %}TEACHER PORTAL{% elif user.role == "PARENT" %}PARENT PORTAL{% else %}STUDENT PORTAL{% endif %}</small>
-            </span>
-        </a>
+        <div class="student-nav-brand-row">
+            {% if request.resolver_match.url_name != "student_test" %}
+            <button id="sidebar-mobile-toggle" class="sidebar-mobile-toggle" type="button" aria-label="Open navigation" aria-controls="portal-sidebar" aria-expanded="false">
+                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 6h16M4 12h16M4 18h16"/></svg>
+            </button>
+            {% endif %}
+            <a class="student-brand" href="{% url 'dashboard' %}" aria-label="StudyPod student dashboard">
+                <span class="student-brand-mark">dsp</span>
+                <span class="student-brand-copy">
+                    <strong>StudyPod</strong>
+                    <small>DSP ACADEMY · {% if user.role == "TEACHER" %}TEACHER PORTAL{% elif user.role == "PARENT" %}PARENT PORTAL{% else %}STUDENT PORTAL{% endif %}</small>
+                </span>
+            </a>
+        </div>
         <div class="student-nav-links">
             <a href="{% url 'notices' %}">Notices</a>
             <span class="student-user-chip">

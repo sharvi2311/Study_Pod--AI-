@@ -182,6 +182,8 @@
     </style>
     {% if user.is_authenticated and user.role == "STUDENT" or user.is_authenticated and user.role == "TEACHER" or user.is_authenticated and user.role == "PARENT" %}
         {% include "accounts/partials/student_portal_styles.html" %}
+    {% elif user.is_authenticated %}
+        {% include "accounts/partials/portal_sidebar_styles.html" %}
     {% endif %}
 </head>
 <body class="{% if user.is_authenticated and user.role == 'STUDENT' %}student-portal{% elif user.is_authenticated and user.role == 'TEACHER' or user.is_authenticated and user.role == 'PARENT' %}teacher-parent-portal{% else %}bg-light{% endif %}">
@@ -192,6 +194,11 @@
     <nav class="navbar navbar-dark bg-dark">
         <div class="container d-flex justify-content-between">
             {% if user.is_authenticated %}
+                {% if request.resolver_match.url_name != "student_test" %}
+                <button id="sidebar-mobile-toggle" class="sidebar-mobile-toggle" type="button" aria-label="Open navigation" aria-controls="portal-sidebar" aria-expanded="false">
+                    <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 6h16M4 12h16M4 18h16"/></svg>
+                </button>
+                {% endif %}
                 <a href="{% url 'dashboard' %}" class="navbar-brand fw-semibold">StudyPod</a>
                 <div class="d-flex flex-wrap align-items-center gap-2">
                     <a href="{% url 'notices' %}" class="text-white text-decoration-none me-2">Notices</a>
@@ -209,7 +216,15 @@
     {% endif %}
     {% endblock %}
 
-    <main class="container py-5">
+    {% if user.is_authenticated %}
+    <div class="portal-shell">
+        {% if request.resolver_match.url_name != "student_test" %}
+            {% include "accounts/partials/portal_sidebar.html" %}
+        {% endif %}
+        <main id="portal-main">
+    {% else %}
+        <main id="portal-main" class="container py-5">
+    {% endif %}
         {% if messages %}
             {% for message in messages %}
                 <div class="alert alert-{{ message.tags }} alert-dismissible fade show" role="alert">
@@ -220,6 +235,7 @@
         {% endif %}
         {% block content %}{% endblock %}
     </main>
+    {% if user.is_authenticated %}</div>{% endif %}
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
     <script>

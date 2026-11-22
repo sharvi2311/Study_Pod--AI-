@@ -76,7 +76,9 @@
 
 <body class="teacher-parent-portal">
 {% include "accounts/partials/student_portal_header.html" %}
-
+<div class="portal-shell">
+{% include "accounts/partials/portal_sidebar.html" %}
+<main id="portal-main" class="portal-main">
 <div class="container page-container">
 
     <div class="mb-4">
@@ -579,7 +581,8 @@
     {% endif %}
 
 </div>
-
+</main>
+</div>
 
 <script>
 

@@ -1,0 +1,175 @@
+<aside id="portal-sidebar" class="portal-sidebar" aria-label="Portal navigation" data-current-route="{{ request.resolver_match.url_name|default:'' }}">
+    <div class="sidebar-heading">
+        <span class="sidebar-kicker">STUDYPOD</span>
+        <span class="sidebar-role">{% if user.role == "TEACHER" %}Teacher workspace{% elif user.role == "STUDENT" %}Student workspace{% elif user.role == "PARENT" %}Parent workspace{% else %}Workspace{% endif %}</span>
+    </div>
+
+    <nav class="sidebar-nav" aria-label="Sections">
+        {% if user.role == "TEACHER" %}
+            <p class="sidebar-group-label">Teaching</p>
+            <a class="sidebar-link" data-sidebar-routes="dashboard" href="{% url 'dashboard' %}">
+                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m3 10 9-7 9 7v10a1 1 0 0 1-1 1h-6v-7h-4v7H4a1 1 0 0 1-1-1z"/></svg><span>Dashboard</span>
+            </a>
+            <a class="sidebar-link" data-sidebar-routes="test_management question_create test_preview teacher_attempts teacher_attempt_detail" href="{% url 'test_management' %}">
+                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 3h10l3 3v15H4V3zM8 3v6h8V3M8 14h8M8 18h5"/></svg><span>Assessments &amp; Tests</span>
+            </a>
+            <a class="sidebar-link" data-sidebar-routes="teacher_timetable" href="{% url 'teacher_timetable' %}">
+                <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M16 3v4M8 3v4M3 10h18M8 14h3M8 17h6"/></svg><span>Timetable</span>
+            </a>
+            <a class="sidebar-link" data-sidebar-routes="teacher_attendance" href="{% url 'teacher_attendance' %}">
+                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 4H5a2 2 0 0 0-2 2v13a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2h-3M8 4a2 2 0 0 0 2 2h4a2 2 0 0 0 2-2 2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2ZM7 13l3 3 7-7"/></svg><span>Attendance</span>
+            </a>
+            <a class="sidebar-link" data-sidebar-routes="teacher_analytics" href="{% url 'teacher_analytics' %}">
+                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 20V12M10 20V5M16 20v-8M22 20H2"/></svg><span>Student Progress</span>
+            </a>
+            <a class="sidebar-link" data-sidebar-routes="resource_upload teacher_resource_detail teacher_resource_reindex teacher_resource_delete" href="{% url 'resource_upload' %}">
+                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 4h6l2 2h8a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2Z"/><path d="M12 10v7M9 14l3-4 3 4"/></svg><span>Study Resources</span>
+            </a>
+            <p class="sidebar-group-label">Community</p>
+            <a class="sidebar-link" data-sidebar-routes="notices create_notice" href="{% url 'notices' %}">
+                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M18 8a6 6 0 0 0-12 0c0 7-3 7-3 9h18c0-2-3-2-3-9M10 21h4"/></svg><span>Notices</span>
+            </a>
+            <a class="sidebar-link" data-sidebar-routes="doubt_threads doubt_thread_detail" href="{% url 'doubt_threads' %}">
+                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M21 11.5a8.5 8.5 0 0 1-12.6 7.4L3 21l2.1-5.4A8.5 8.5 0 1 1 21 11.5Z"/><path d="M9 9a3 3 0 0 1 5.8 1c0 2-2.8 2-2.8 4M12 17h.01"/></svg><span>Doubt Discussions</span>
+            </a>
+            <a class="sidebar-link" data-sidebar-routes="teacher_leave_page" href="{% url 'teacher_leave_page' %}">
+                <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="4" y="3" width="16" height="18" rx="2"/><path d="M8 8h8M8 12h8M8 16h5"/></svg><span>Leave Requests</span>
+            </a>
+            <a class="sidebar-link" data-sidebar-routes="teacher_leave_request" href="{% url 'teacher_leave_request' %}">
+                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg><span>Request Leave</span>
+            </a>
+        {% elif user.role == "STUDENT" %}
+            <p class="sidebar-group-label">Learning</p>
+            <a class="sidebar-link" data-sidebar-routes="dashboard" href="{% url 'dashboard' %}">
+                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m3 10 9-7 9 7v10a1 1 0 0 1-1 1h-6v-7h-4v7H4a1 1 0 0 1-1-1z"/></svg><span>Dashboard</span>
+            </a>
+            <a class="sidebar-link" data-sidebar-routes="student_assessments student_assessment_instructions student_result" href="{% url 'student_assessments' %}">
+                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 3h10l3 3v15H4V3zM8 3v6h8V3M8 14h8M8 18h5"/></svg><span>My Assessments</span>
+            </a>
+            <a class="sidebar-link" data-sidebar-routes="student_timetable" href="{% url 'student_timetable' %}">
+                <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M16 3v4M8 3v4M3 10h18M8 14h3M8 17h6"/></svg><span>Timetable</span>
+            </a>
+            <a class="sidebar-link" data-sidebar-routes="academics_student_attendance student_attendance" href="{% url 'academics_student_attendance' %}">
+                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 4H5a2 2 0 0 0-2 2v13a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2h-3M8 4a2 2 0 0 0 2 2h4a2 2 0 0 0 2-2 2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2ZM7 13l3 3 7-7"/></svg><span>Attendance</span>
+            </a>
+            <a class="sidebar-link" data-sidebar-routes="student_analytics parent_analytics" href="{% url 'student_analytics' %}">
+                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 20V12M10 20V5M16 20v-8M22 20H2"/></svg><span>Progress</span>
+            </a>
+            <a class="sidebar-link" data-sidebar-routes="resource_list student_resource_detail" href="{% url 'resource_list' %}">
+                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 4h6l2 2h8a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2Z"/><path d="M12 10v7M9 14l3-4 3 4"/></svg><span>Study Resources</span>
+            </a>
+            <p class="sidebar-group-label">Community</p>
+            <a class="sidebar-link" data-sidebar-routes="notices" href="{% url 'notices' %}">
+                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M18 8a6 6 0 0 0-12 0c0 7-3 7-3 9h18c0-2-3-2-3-9M10 21h4"/></svg><span>Notices</span>
+            </a>
+            <a class="sidebar-link" data-sidebar-routes="doubt_threads doubt_thread_detail" href="{% url 'doubt_threads' %}">
+                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M21 11.5a8.5 8.5 0 0 1-12.6 7.4L3 21l2.1-5.4A8.5 8.5 0 1 1 21 11.5Z"/><path d="M9 9a3 3 0 0 1 5.8 1c0 2-2.8 2-2.8 4M12 17h.01"/></svg><span>Doubts &amp; Discussions</span>
+            </a>
+            <a class="sidebar-link" data-sidebar-routes="student_leave_page" href="{% url 'student_leave_page' %}">
+                <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="4" y="3" width="16" height="18" rx="2"/><path d="M8 8h8M8 12h8M8 16h5"/></svg><span>Leave Applications</span>
+            </a>
+        {% elif user.role == "PARENT" %}
+            <p class="sidebar-group-label">Family</p>
+            <a class="sidebar-link" data-sidebar-routes="dashboard" href="{% url 'dashboard' %}">
+                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m3 10 9-7 9 7v10a1 1 0 0 1-1 1h-6v-7h-4v7H4a1 1 0 0 1-1-1z"/></svg><span>Child Overview</span>
+            </a>
+            <a class="sidebar-link" data-sidebar-routes="parent_analytics" href="{% url 'parent_analytics' %}">
+                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 20V12M10 20V5M16 20v-8M22 20H2"/></svg><span>Progress &amp; Marks</span>
+            </a>
+            <a class="sidebar-link" data-sidebar-routes="parent_timetable" href="{% url 'parent_timetable' %}">
+                <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M16 3v4M8 3v4M3 10h18M8 14h3M8 17h6"/></svg><span>Timetable</span>
+            </a>
+            <a class="sidebar-link" data-sidebar-routes="parent_attendance" href="{% url 'parent_attendance' %}">
+                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 4H5a2 2 0 0 0-2 2v13a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2h-3M8 4a2 2 0 0 0 2 2h4a2 2 0 0 0 2-2 2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2ZM7 13l3 3 7-7"/></svg><span>Attendance</span>
+            </a>
+            <a class="sidebar-link" data-sidebar-routes="resource_list student_resource_detail" href="{% url 'resource_list' %}">
+                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 4h6l2 2h8a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2Z"/><path d="M12 10v7M9 14l3-4 3 4"/></svg><span>Study Resources</span>
+            </a>
+            <p class="sidebar-group-label">Community</p>
+            <a class="sidebar-link" data-sidebar-routes="notices" href="{% url 'notices' %}">
+                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M18 8a6 6 0 0 0-12 0c0 7-3 7-3 9h18c0-2-3-2-3-9M10 21h4"/></svg><span>Notices</span>
+            </a>
+            <a class="sidebar-link" data-sidebar-routes="doubt_threads doubt_thread_detail" href="{% url 'doubt_threads' %}">
+                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M21 11.5a8.5 8.5 0 0 1-12.6 7.4L3 21l2.1-5.4A8.5 8.5 0 1 1 21 11.5Z"/><path d="M9 9a3 3 0 0 1 5.8 1c0 2-2.8 2-2.8 4M12 17h.01"/></svg><span>Doubt Discussions</span>
+            </a>
+            <a class="sidebar-link" data-sidebar-routes="parent_leave_page" href="{% url 'parent_leave_page' %}">
+                <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="4" y="3" width="16" height="18" rx="2"/><path d="M8 8h8M8 12h8M8 16h5"/></svg><span>Shared Leave</span>
+            </a>
+        {% else %}
+            <p class="sidebar-group-label">Workspace</p>
+            <a class="sidebar-link" data-sidebar-routes="dashboard" href="{% url 'dashboard' %}">
+                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m3 10 9-7 9 7v10a1 1 0 0 1-1 1h-6v-7h-4v7H4a1 1 0 0 1-1-1z"/></svg><span>Dashboard</span>
+            </a>
+            <a class="sidebar-link" data-sidebar-routes="notices" href="{% url 'notices' %}">
+                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M18 8a6 6 0 0 0-12 0c0 7-3 7-3 9h18c0-2-3-2-3-9M10 21h4"/></svg><span>Notices</span>
+            </a>
+        {% endif %}
+
+        <div class="sidebar-footer-links">
+            <a class="sidebar-link" data-sidebar-routes="profile" href="{% url 'profile' %}">
+                <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="8" r="4"/><path d="M4 21a8 8 0 0 1 16 0"/></svg><span>Profile</span>
+            </a>
+            <a class="sidebar-link" href="{% url 'logout' %}">
+                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M10 17l5-5-5-5M15 12H3M12 3h6a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-6"/></svg><span>Sign out</span>
+            </a>
+        </div>
+    </nav>
+</aside>
+<button id="sidebar-backdrop" class="sidebar-backdrop" type="button" aria-label="Close navigation" tabindex="-1"></button>
+
+<script>
+    (function () {
+        var sidebar = document.getElementById('portal-sidebar');
+        var toggle = document.getElementById('sidebar-mobile-toggle');
+        var backdrop = document.getElementById('sidebar-backdrop');
+        if (!sidebar || !toggle || !backdrop) return;
+
+        var mobileQuery = window.matchMedia('(max-width: 991.98px)');
+        var currentRoute = sidebar.getAttribute('data-current-route');
+        sidebar.querySelectorAll('[data-sidebar-routes]').forEach(function (link) {
+            var routes = link.getAttribute('data-sidebar-routes').split(/\s+/);
+            if (routes.indexOf(currentRoute) !== -1) {
+                link.classList.add('is-active');
+                link.setAttribute('aria-current', 'page');
+            }
+        });
+
+        function setOpen(isOpen) {
+            var open = mobileQuery.matches && isOpen;
+            document.body.classList.toggle('sidebar-open', open);
+            toggle.setAttribute('aria-expanded', String(open));
+            sidebar.setAttribute('aria-hidden', String(mobileQuery.matches && !open));
+            backdrop.setAttribute('aria-hidden', String(!open));
+            backdrop.tabIndex = open ? 0 : -1;
+        }
+
+        toggle.addEventListener('click', function () {
+            setOpen(!document.body.classList.contains('sidebar-open'));
+        });
+        backdrop.addEventListener('click', function () {
+            setOpen(false);
+            toggle.focus();
+        });
+        sidebar.querySelectorAll('a').forEach(function (link) {
+            link.addEventListener('click', function () {
+                if (mobileQuery.matches) setOpen(false);
+            });
+        });
+        document.addEventListener('keydown', function (event) {
+            if (event.key === 'Escape' && document.body.classList.contains('sidebar-open')) {
+                setOpen(false);
+                toggle.focus();
+            }
+        });
+        if (mobileQuery.addEventListener) {
+            mobileQuery.addEventListener('change', function () {
+                setOpen(false);
+            });
+        } else if (mobileQuery.addListener) {
+            mobileQuery.addListener(function () {
+                setOpen(false);
+            });
+        }
+        setOpen(false);
+    })();
+</script>
