@@ -16,6 +16,13 @@
                 theme = prefersDark ? 'dark' : 'light';
             }
             document.documentElement.setAttribute('data-theme', theme);
+            var sidebarCollapsed = false;
+            try {
+                sidebarCollapsed = localStorage.getItem('studypod-sidebar-collapsed') === 'true';
+            } catch (error) {
+                // Storage can be unavailable in private browsing contexts.
+            }
+            document.documentElement.setAttribute('data-sidebar-collapsed', String(sidebarCollapsed));
         })();
     </script>
     <title>{% block title %}StudyPod{% endblock %}</title>

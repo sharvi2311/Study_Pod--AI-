@@ -1,7 +1,12 @@
 <aside id="portal-sidebar" class="portal-sidebar" aria-label="Portal navigation" data-current-route="{{ request.resolver_match.url_name|default:'' }}">
     <div class="sidebar-heading">
-        <span class="sidebar-kicker">STUDYPOD</span>
-        <span class="sidebar-role">{% if user.role == "TEACHER" %}Teacher workspace{% elif user.role == "STUDENT" %}Student workspace{% elif user.role == "PARENT" %}Parent workspace{% else %}Workspace{% endif %}</span>
+        <div class="sidebar-brand-copy">
+            <span class="sidebar-kicker">STUDYPOD</span>
+            <span class="sidebar-role">{% if user.role == "TEACHER" %}Teacher workspace{% elif user.role == "STUDENT" %}Student workspace{% elif user.role == "PARENT" %}Parent workspace{% else %}Workspace{% endif %}</span>
+        </div>
+        <button id="sidebar-collapse-btn" class="sidebar-collapse-btn" type="button" aria-label="Toggle sidebar width" aria-expanded="true" title="Collapse sidebar">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m14 6-6 6 6 6"/></svg>
+        </button>
     </div>
 
     <nav class="sidebar-nav" aria-label="Sections">
@@ -126,7 +131,8 @@
         var sidebar = document.getElementById('portal-sidebar');
         var toggle = document.getElementById('sidebar-mobile-toggle');
         var backdrop = document.getElementById('sidebar-backdrop');
-        if (!sidebar || !toggle || !backdrop) return;
+        var collapseButton = document.getElementById('sidebar-collapse-btn');
+        if (!sidebar) return;
 
         var mobileQuery = window.matchMedia('(max-width: 991.98px)');
         var currentRoute = sidebar.getAttribute('data-current-route');
@@ -136,7 +142,34 @@
                 link.classList.add('active');
                 link.setAttribute('aria-current', 'page');
             }
+            var label = link.querySelector('span');
+            if (label) link.setAttribute('title', label.textContent.trim());
         });
+
+        var activeLink = sidebar.querySelector('.sidebar-link.active');
+        if (activeLink) activeLink.scrollIntoView({ block: 'nearest' });
+
+        function setCollapsed(isCollapsed) {
+            document.documentElement.setAttribute('data-sidebar-collapsed', String(isCollapsed));
+            if (collapseButton) {
+                collapseButton.setAttribute('aria-expanded', String(!isCollapsed));
+                collapseButton.setAttribute('title', isCollapsed ? 'Expand sidebar' : 'Collapse sidebar');
+            }
+            try {
+                localStorage.setItem('studypod-sidebar-collapsed', String(isCollapsed));
+            } catch (error) {
+                // Keep the current-page state when storage is unavailable.
+            }
+        }
+
+        setCollapsed(document.documentElement.getAttribute('data-sidebar-collapsed') === 'true');
+        if (collapseButton) {
+            collapseButton.addEventListener('click', function () {
+                setCollapsed(document.documentElement.getAttribute('data-sidebar-collapsed') !== 'true');
+            });
+        }
+
+        if (!toggle || !backdrop) return;
 
         function setOpen(isOpen) {
             var open = mobileQuery.matches && isOpen;
