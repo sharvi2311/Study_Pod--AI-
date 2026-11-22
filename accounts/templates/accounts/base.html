@@ -66,12 +66,13 @@
             --bs-tertiary-bg: #18263c;
             --bs-border-color: #2b3950;
             --bs-table-color: #e2e8f0;
-            --bs-table-bg: #121d2f;
+            --bs-table-bg: #1e293b;
             --bs-table-border-color: #2b3950;
             --bs-table-striped-bg: #162238;
             --bs-table-hover-bg: #1d2b43;
             --bs-table-hover-color: #f1f5f9;
         }
+        html[data-theme="light"] { color-scheme: light; }
 
         html[data-theme="dark"] body {
             background-color: var(--sp-background) !important;
@@ -120,7 +121,41 @@
             border-color: #7d9ce8;
             color: var(--sp-text);
         }
-        html[data-theme="dark"] .table { --bs-table-color: #e2e8f0; --bs-table-bg: #121d2f; }
+        html[data-theme="dark"] .form-control:disabled,
+        html[data-theme="dark"] .form-select:disabled,
+        html[data-theme="dark"] .form-control[readonly] {
+            background-color: #263349;
+            border-color: #334155;
+            color: #94a3b8;
+            opacity: 1;
+        }
+        html[data-theme="dark"] .form-check-input { accent-color: #8eafff; }
+        html[data-theme="dark"] .form-check-input:checked { background-color: #8eafff; border-color: #8eafff; }
+        html[data-theme="dark"] .form-check-label { color: var(--sp-text); }
+        html[data-theme="dark"] .form-check-input:disabled { opacity: .55; }
+        html[data-theme="dark"] .btn:focus-visible,
+        html[data-theme="dark"] .form-check-input:focus-visible,
+        html[data-theme="dark"] .page-link:focus-visible {
+            outline: 2px solid #8eafff;
+            outline-offset: 2px;
+            box-shadow: none;
+        }
+        html[data-theme="dark"] .nav-link { color: #cbd5e1; }
+        html[data-theme="dark"] .nav-link:hover,
+        html[data-theme="dark"] .nav-link:focus { color: #f1f5f9; }
+        html[data-theme="dark"] .nav-tabs { border-color: var(--sp-border); }
+        html[data-theme="dark"] .nav-tabs .nav-link.active,
+        html[data-theme="dark"] .nav-pills .nav-link.active { background-color: #263349; color: #f1f5f9; }
+        html[data-theme="dark"] .page-link { background-color: #1e293b; border-color: #334155; color: #cbd5e1; }
+        html[data-theme="dark"] .page-item.active .page-link { background-color: #334155; border-color: #475569; color: #f1f5f9; }
+        html[data-theme="dark"] .page-item.disabled .page-link { background-color: #172234; border-color: #2b3950; color: #718096; }
+        html[data-theme="dark"] .alert-light { background: #263349; border-color: #334155; color: #cbd5e1; }
+        html[data-theme="dark"] .alert-info { background: #132b3a; border-color: #24506a; color: #bae6fd; }
+        html[data-theme="dark"] .alert-success { background: #153228; border-color: #28583f; color: #bbf7d0; }
+        html[data-theme="dark"] .alert-warning { background: #382c15; border-color: #6b5121; color: #fde68a; }
+        html[data-theme="dark"] .alert-danger { background: #3b1f2b; border-color: #713344; color: #fecdd3; }
+        html[data-theme="dark"] .alert-secondary { background: #263349; border-color: #334155; color: #cbd5e1; }
+        html[data-theme="dark"] .table { --bs-table-color: #e2e8f0; --bs-table-bg: #1e293b; }
         html[data-theme="dark"] .table-light,
         html[data-theme="dark"] .table-light > th,
         html[data-theme="dark"] .table-light > td {
@@ -135,6 +170,8 @@
         html[data-theme="dark"] .badge.bg-light,
         html[data-theme="dark"] .badge.text-bg-light { background-color: #263349 !important; color: #cbd5e1 !important; }
         html[data-theme="dark"] .badge.bg-warning.text-dark { color: #1e293b !important; }
+        html[data-theme="dark"] label:has(.answer-input:checked) { background-color: #263349; border-color: #64748b !important; }
+        html[data-theme="dark"] label:has(.answer-input):hover { background-color: #1e293b; }
         html[data-theme="dark"] .login-screen { background: #0b1220 !important; color: var(--sp-text); }
         html[data-theme="dark"] .login-card { background: var(--sp-surface) !important; }
         html[data-theme="dark"] .login-brand h1,
