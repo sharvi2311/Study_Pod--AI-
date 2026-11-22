@@ -19,9 +19,10 @@ from django.urls import path, include, re_path
 from django.conf import settings
 from django.views.static import serve
 from academics import views as academic_views
-
+from django.views.generic import RedirectView
 
 urlpatterns = [
+    path("", RedirectView.as_view(url="/login/", permanent=False)),
     path("admin/", admin.site.urls),
     path("", include("accounts.urls")),
     path("academics/", include("academics.urls")),
