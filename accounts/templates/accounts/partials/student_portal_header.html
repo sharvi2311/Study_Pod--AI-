@@ -15,6 +15,10 @@
             </span>
             <a class="student-nav-button" href="{% url 'profile' %}">Profile</a>
             <a class="student-nav-button student-logout" href="{% url 'logout' %}">Logout</a>
+            <button type="button" class="student-nav-button theme-toggle" data-theme-toggle aria-label="Switch to dark mode" aria-pressed="false">
+                <span data-theme-toggle-icon aria-hidden="true">☾</span>
+                <span data-theme-toggle-label>Dark mode</span>
+            </button>
         </div>
     </div>
 </nav>
