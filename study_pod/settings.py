@@ -12,6 +12,7 @@ https://docs.djangoproject.com/en/6.1/ref/settings/
 
 from pathlib import Path
 import os
+import shutil
 
 from django.core.exceptions import ImproperlyConfigured
 from dotenv import load_dotenv
@@ -41,14 +42,16 @@ if not SECRET_KEY:
         raise ImproperlyConfigured("SECRET_KEY must be set when DEBUG is False.")
     SECRET_KEY = "django-insecure-study-pod-development-only-change-me"
 
-_allowed_hosts = os.environ.get("ALLOWED_HOSTS")
-if not DEBUG and not _allowed_hosts:
-    raise ImproperlyConfigured("ALLOWED_HOSTS must be set when DEBUG is False.")
-ALLOWED_HOSTS = (
-    [host.strip() for host in _allowed_hosts.split(",") if host.strip()]
-    if _allowed_hosts is not None
-    else ["localhost", "127.0.0.1", "[::1]", "testserver"]
-)
+ALLOWED_HOSTS = [".vercel.app", "localhost", "127.0.0.1"] + [
+    host.strip()
+    for host in os.environ.get("ALLOWED_HOSTS", "").split(",")
+    if host.strip()
+]
+CSRF_TRUSTED_ORIGINS = ["https://*.vercel.app"] + [
+    origin.strip()
+    for origin in os.environ.get("CSRF_TRUSTED_ORIGINS", "").split(",")
+    if origin.strip()
+]
 
 
 # Application definition
@@ -107,6 +110,13 @@ DATABASES = {
         'NAME': BASE_DIR / 'db.sqlite3',
     }
 }
+
+if os.environ.get("VERCEL") and not os.environ.get("DATABASE_URL"):
+    vercel_db_path = Path("/tmp/db.sqlite3")
+    source_db_path = BASE_DIR / "db.sqlite3"
+    if source_db_path.exists() and not vercel_db_path.exists():
+        shutil.copy2(source_db_path, vercel_db_path)
+    DATABASES["default"]["NAME"] = str(vercel_db_path)
 
 
 # Password validation
