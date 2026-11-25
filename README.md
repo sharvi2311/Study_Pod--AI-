@@ -5,7 +5,7 @@
 ![Deployed on Vercel](https://img.shields.io/badge/Deployed%20on-Vercel-black?logo=vercel&logoColor=white)
 ![65 tests passing](https://img.shields.io/badge/Tests-65%20Passing-brightgreen)
 
-> **Live Demo:** [https://YOUR-VERCEL-URL.vercel.app](https://YOUR-VERCEL-URL.vercel.app) — replace `YOUR-VERCEL-URL` with the deployed Vercel hostname.
+> **Live Demo:** https://study-pod-ai.vercel.app/login/
 
 Study_Pod is a role-based Django learning portal built around a real coaching-academy workflow. Explore teacher, student, and parent portals, plus a timed assessment engine, using the included demo database and study resources.
 
